@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSistemasProyecto">
-        <activity android:name=".Home_navegation"></activity>
+        <activity android:name=".activity_user"></activity>
+        <activity android:name=".Home_navegation" />
         <activity android:name=".Home_auth" />
 
         <meta-data
