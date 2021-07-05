@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "178144844651",
+    "project_id": "proyecto-de-rastreo",
+    "storage_bucket": "proyecto-de-rastreo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178144844651:android:03ad4b2a1be4e1aa808a2e",
+        "android_client_info": {
+          "package_name": "com.example.newsistemasproyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178144844651-qn3j4lgdor424tb8aeda1i5d7o98aidg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLuW03ae53hM4Ogzrl1mm7I8zhUsgtuDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "178144844651-qn3j4lgdor424tb8aeda1i5d7o98aidg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
