@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.37" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/ContraseniaText"
         android:layout_width="277dp"
         android:layout_height="47dp"
         android:ems="10"
@@ -35,13 +35,13 @@
         app:layout_constraintVertical_bias="0.454" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonRegistrar"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Registrar"
         app:backgroundTint="#F47236"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonAcceder"
         app:layout_constraintHeight_percent=".1"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -51,7 +51,7 @@
         app:layout_constraintWidth_percent=".455" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonAcceder"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Acceder"
@@ -60,13 +60,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent=".1"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/buttonRegistrar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.607"
         app:layout_constraintWidth_percent=".455" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/buttonGoogleAccount"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Google Account"
@@ -87,7 +87,7 @@
         app:layout_constraintHeight_percent="0.889"
         app:layout_constraintWidth_percent=".467"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/buttonGoogleAccount"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
