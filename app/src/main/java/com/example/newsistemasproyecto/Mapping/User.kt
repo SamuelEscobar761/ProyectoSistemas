@@ -1,4 +1,3 @@
 package com.example.newsistemasproyecto.Mapping
 
-class User {
-}
+data class User(val email: String, val password: String)
