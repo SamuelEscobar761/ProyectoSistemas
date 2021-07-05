@@ -3,9 +3,9 @@ package com.example.newsistemasproyecto
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class Home_navegation : AppCompatActivity() {
+class Home_navigation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_navegation)
+        setContentView(R.layout.activity_home_navigation)
     }
 }

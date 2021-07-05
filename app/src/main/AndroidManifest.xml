@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSistemasProyecto">
         <activity android:name=".activity_user"></activity>
-        <activity android:name=".Home_navegation" />
+        <activity android:name=".Home_navigation" />
         <activity android:name=".Home_auth" />
 
         <meta-data
