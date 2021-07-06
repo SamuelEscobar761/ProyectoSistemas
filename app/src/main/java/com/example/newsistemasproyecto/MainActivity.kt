@@ -2,13 +2,17 @@ package com.example.newsistemasproyecto
 
 import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.newsistemasproyecto.Mapping.User
 import com.example.newsistemasproyecto.Mapping.showLongMessage
 import com.example.newsistemasproyecto.Mapping.showShortMessage
 import com.example.newsistemasproyecto.databinding.ActivityHomeAuthBinding
+import com.google.android.gms.common.internal.Preconditions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -28,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         auth = Firebase.auth
         binding.buttonAcceder.setOnClickListener {
+            val userName = binding.userNameText.text.toString()
             val email = binding.EmailText.text.toString()
             val password = binding.ContraseniaText.text.toString()
             //Animacion de carga
@@ -40,15 +45,20 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 else -> {
-                    signIn(email, password)
+                    signIn(userName, email, password)
                 }
             }
         }
 
         binding.buttonRegistrar.setOnClickListener {
+            val userName = binding.userNameText.text.toString()
             val email = binding.EmailText.text.toString()
             val password = binding.ContraseniaText.text.toString()
             when {
+                userName.isEmpty() -> showLongMessage(
+                    this,
+                    "El nombre de usuario no puede estar vacío"
+                )
                 email.isEmpty() -> showLongMessage(
                     this,
                     "El email no puede estar vacio!!"
@@ -58,13 +68,13 @@ class MainActivity : AppCompatActivity() {
                     "La contraseña no puede estar vacía!!"
                 )
                 else -> {
-                    register(email, password)
+                    register(userName, email, password)
                 }
             }
         }
     }
 
-    private fun signIn(userEmail: String, userPassword: String) {
+    private fun signIn(userName: String, userEmail: String, userPassword: String) {
         auth.signInWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -80,18 +90,18 @@ class MainActivity : AppCompatActivity() {
                     Log.w(ContentValues.TAG, "signInWithEmail:failure", task.exception)
                     showShortMessage(baseContext, "La autenticación falló!!")
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("email", userEmail)
+                    finish()
                     startActivity(intent)
                 }
             }
     }
 
-    private fun register(userEmail: String, userPassword: String) {
+    private fun register(userName: String, userEmail: String, userPassword: String) {
         auth.createUserWithEmailAndPassword(userEmail, userPassword)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     database = FirebaseDatabase.getInstance().getReference("Users")
-                    val user = User(userEmail, userPassword)
+                    val user = User(userName, userEmail, userPassword)
                     database.child(auth.uid!!).setValue(user).addOnSuccessListener {
                         showShortMessage(baseContext, "Registro exitoso")
                     }.addOnFailureListener {
@@ -100,8 +110,8 @@ class MainActivity : AppCompatActivity() {
                     Log.d(ContentValues.TAG, "createUserWithEmail:success")
 //                    auth.signOut()
                     val intent = Intent(this, Home_navigation::class.java)
-                    intent.putExtra("email", userEmail)
                     startActivity(intent)
+                    finish()
                 } else {
                     Log.w(ContentValues.TAG, "createUserWithEmail:failure", task.exception)
                     showShortMessage(baseContext, task.exception?.message!!)

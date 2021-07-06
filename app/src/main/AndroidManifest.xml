@@ -16,7 +16,6 @@
         android:theme="@style/Theme.NewSistemasProyecto">
         <activity android:name=".activity_user"></activity>
         <activity android:name=".Home_navigation" />
-        <activity android:name=".Home_auth" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

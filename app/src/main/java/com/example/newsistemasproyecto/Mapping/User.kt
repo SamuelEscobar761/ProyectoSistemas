@@ -1,3 +1,3 @@
 package com.example.newsistemasproyecto.Mapping
 
-data class User(val email: String, val password: String)
+data class User(val userName: String, val email: String, val password: String)
