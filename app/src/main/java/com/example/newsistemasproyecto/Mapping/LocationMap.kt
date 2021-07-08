@@ -1,3 +1,8 @@
 package com.example.newsistemasproyecto.Mapping
 
-data class LocationMap(val latitude: Double?, val longitud: Double?, val nombre: String, val email: String)
+data class LocationMap(
+    val email: String? = null,
+    val latitude: Double? = null,
+    val longitude: Double? = null,
+    val nombre: String? = null
+)

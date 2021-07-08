@@ -11,16 +11,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.newsistemasproyecto.Mapping.LocationMap
 import com.example.newsistemasproyecto.Mapping.showShortMessage
 import com.example.newsistemasproyecto.databinding.ActivityHomeNavigationBinding
@@ -31,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class Home_navigation : AppCompatActivity() {
-    lateinit var recyclerViewUsersLocation: RecyclerView
     private lateinit var bindingNavigation: ActivityHomeNavigationBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -44,7 +36,7 @@ class Home_navigation : AppCompatActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     lateinit var map: GoogleMap
-    private val TIEMPO: Long = 5000
+    private val TIEMPO: Long = 3000
     private var weCanGetCurrentLocation = true
     var handler: Handler = Handler()
     var userLocation: LatLng? = null
@@ -65,6 +57,7 @@ class Home_navigation : AppCompatActivity() {
 
         val switchLocalizacion = bindingNavigation.switchLocalizacion
         val mapButton = bindingNavigation.verEnMapaButton
+        val profileButton = bindingNavigation.profileUser
 
         getLocationsData()
         getDatabaseData()
@@ -73,13 +66,25 @@ class Home_navigation : AppCompatActivity() {
 
         switchLocalizacion.setOnClickListener {
             weCanGetCurrentLocation = switchLocalizacion.isChecked()
+            getCurrentLocation()
         }
 
         mapButton.setOnClickListener {
-            val intent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://www.google.com.bo/maps/@" + userLocation?.latitude + "," + userLocation?.longitude + ",19z?hl=es")
-            )
+            val nameUserText = bindingNavigation.nombreText.text.toString()
+            val emailUserText = bindingNavigation.emailText.text.toString()
+            for (userLocationn in listLocations) {
+                if (userLocationn.nombre == nameUserText && userLocationn.email == emailUserText) {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.google.com.bo/maps/@" + userLocationn?.latitude + "," + userLocationn?.longitude + ",19z?hl=es")
+                    )
+                    startActivity(intent)
+                }
+            }
+        }
+
+        profileButton.setOnClickListener{
+            val intent = Intent(this, Profile::class.java)
             startActivity(intent)
         }
     }
@@ -90,7 +95,6 @@ class Home_navigation : AppCompatActivity() {
         databaseReference.child(user).get().addOnSuccessListener {
             email = it.child("email").value.toString()
             userName = it.child("userName").value.toString()
-            showShortMessage(baseContext, email)
         }
 
         handler.postDelayed(object : Runnable {
@@ -118,16 +122,16 @@ class Home_navigation : AppCompatActivity() {
 
     private fun getLocationsData() {
         listLocations = mutableListOf()
-        databaseReference = FirebaseDatabase.getInstance().reference.child("location")
+        databaseReference = FirebaseDatabase.getInstance().reference.child("Location")
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (loc in snapshot.children) {
                         val location = LocationMap(
+                            loc.getValue(LocationMap::class.java)!!.email,
                             loc.getValue(LocationMap::class.java)!!.latitude,
-                            loc.getValue(LocationMap::class.java)!!.longitud,
-                            loc.getValue(LocationMap::class.java)!!.nombre,
-                            loc.getValue(LocationMap::class.java)!!.email
+                            loc.getValue(LocationMap::class.java)!!.longitude,
+                            loc.getValue(LocationMap::class.java)!!.nombre
                         )
                         listLocations.add(location)
                     }
@@ -147,7 +151,6 @@ class Home_navigation : AppCompatActivity() {
                 break
             }
         }
-        showShortMessage(baseContext, str)
         userFromEmail = str
     }
 
@@ -168,14 +171,21 @@ class Home_navigation : AppCompatActivity() {
     }
 
     private fun saveLocationAtDataBase() {
-        handler.postDelayed(object : Runnable {
-            override fun run() {
-                // función a ejecutar
-                val location = LocationMap(userLocation?.latitude, userLocation?.longitude, userName, email)
-                databaseLocationReference.child(userFromEmail).setValue(location)
-            }
-        }, TIEMPO)
 
+        if(userLocation != null) {
+            handler.postDelayed(object : Runnable {
+                override fun run() {
+                    // función a ejecutar
+                    val location = LocationMap(
+                        email,
+                        userLocation?.latitude!!,
+                        userLocation?.longitude!!,
+                        userName
+                    )
+                    databaseLocationReference.child(userFromEmail).setValue(location)
+                }
+            }, TIEMPO)
+        }
     }
 
     private val locationCallback = object : LocationCallback() {

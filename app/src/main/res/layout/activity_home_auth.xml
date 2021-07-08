@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/userNameText"
-        android:layout_width="277dp"
+        android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/item_button_shape"
@@ -21,11 +21,11 @@
         app:layout_constraintBottom_toTopOf="@+id/EmailText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/viejitoImage" />
 
     <EditText
         android:id="@+id/EmailText"
-        android:layout_width="277dp"
+        android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/item_button_shape"
@@ -41,7 +41,7 @@
 
     <EditText
         android:id="@+id/ContraseniaText"
-        android:layout_width="277dp"
+        android:layout_width="wrap_content"
         android:layout_height="47dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/item_button_shape"
@@ -92,7 +92,7 @@
         app:layout_constraintWidth_percent=".455" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/viejitoImage"
         android:layout_width="261dp"
         android:layout_height="258dp"
         app:layout_constraintBottom_toTopOf="@+id/EmailText"
